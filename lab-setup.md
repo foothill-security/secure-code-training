@@ -14,7 +14,7 @@ We will be using git/github to do some code review. You can technically do it al
 There will be snippets of code provided within this repo. Your task will be to create issues or pull requests (PRs) against those 
 code snippets. You may use an existing github account or an account can be provided for you for this training in the case you do not have one, or do not wish to use your own account.
 
-### Creating a PR
+### Pull Requests in Git (well, GitHub)
 
 ### Creating a PR using git client/command-line
 1. Clone the repo (https://help.github.com/en/articles/cloning-a-repository)
