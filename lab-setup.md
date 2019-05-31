@@ -51,4 +51,4 @@ No ... we're not quite done, but this will get easier as you do it more often. N
 4. Make your edits
 ![](images/web-ui-make-changes.png)
 5. Scroll down, add a commit message ... Optionally select the email associated with the commit and click `Commit changes`.
-6. follow the instructions above for (creating a PR)[#creating-a-pr] 
+6. follow the instructions above for [creating a PR](#creating-a-pr)
