@@ -31,14 +31,24 @@ code snippets. You may use an existing github account or an account can be provi
   * NOTE: this commits your changes *locally only*
 8. Push your changes with `git push -u origin <your-branch-name>`
 
-No ... we're not quite done, but this will get easier as you do it more often
+No ... we're not quite done, but this will get easier as you do it more often. Now we actually create the PR
 
-9. Go to to base of the repo in the Web UI and you will see a message like this ... 
+#### Creating a PR
+1. Go to to base of the repo in the Web UI and you will see a message like this ... 
 ![](images/pull-request-web-ui.png?raw=true)
 
-10. Click 'Compare & Pull Request'
-11. Fill out the title & description and click 'Create Pull Request'
+2. Click 'Compare & Pull Request'
+3. Fill out the title & description and click 'Create Pull Request'
 
 ... That's as far as we'll go here today. We will review/discuss the PRs as in a code review during the training.
 
 #### Creating a PR through the Web UI
+1. Navigate to your repository
+2. Create and/or select a branch of the code
+![](images/web-ui-new-branch.png)
+3. Click the edit (pencil) button at the top-right of the content of the file
+![](images/web-ui-edit-pencil.png)
+4. Make your edits
+![](images/web-ui-make-changes.png)
+5. Scroll down, add a commit message ... Optionally select the email associated with the commit and click `Commit changes`.
+6. follow the instructions above for (creating a PR)[#creating-a-pr] 

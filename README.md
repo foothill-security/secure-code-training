@@ -4,9 +4,10 @@
 This document will provide instructions on lab setup and guides for interactive labs for your secure code training. This will include both 'hacking' labs as well as code review. The code review will happen within this repository itself. Otherwise, there will be links to external apps for the 'hacking' labs.
 
 ## Lab Setup
-For labs
+See the [setup document](lab-setup.md) To get started on lab setup. This will include instructions on setting up your proxy app as well as how to use GitHub for pull requests and PRs
 
-## Labs
+## WebGoat Labs
 
-### AUtomated Scan
-1. Open up ZAP 
+
+## Code Review Labs
+
