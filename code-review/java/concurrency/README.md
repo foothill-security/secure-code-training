@@ -11,9 +11,9 @@ The web pages that relate look like this ...
 ### Purchase Page
 ![](../../../images/concurrency-shopping-page.png)
 
-This is where you put in the quantity for each item. When you click purchase ...
+Above is where you put in the quantity for each item. When you click purchase ...
 
 ### Confirm Page
 ![](../../../images/concurrency-shopping-confirm.png)
 
-This is where you confirm your purchase and it is completed.
+Above is where you confirm your purchase and it is completed.
