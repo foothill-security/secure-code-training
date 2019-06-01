@@ -46,9 +46,12 @@ No ... we're not quite done, but this will get easier as you do it more often. N
 1. Navigate to your repository
 2. Create and/or select a branch of the code
 ![](images/web-ui-new-branch.png)
+
 3. Click the edit (pencil) button at the top-right of the content of the file
 ![](images/web-ui-edit-pencil.png)
+
 4. Make your edits
 ![](images/web-ui-make-changes.png)
+
 5. Scroll down, add a commit message ... Optionally select the email associated with the commit and click `Commit changes`.
 6. follow the instructions above for [creating a PR](#creating-a-pr)
