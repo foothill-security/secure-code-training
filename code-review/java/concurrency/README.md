@@ -9,7 +9,7 @@ This is taken from an older version of WebGoat and cleaned up to be more reviewa
 The web pages that relate look like this ...
 
 ### Purchase Page
-<kdb><img src="../../../images/concurrency-shopping-page.png" /></kdb>
+<kdb><img src="../../../images/concurrency-shopping-page.png" border=2 /></kdb>
 
 This is where you put in the quantity for each item. When you click purchase ...
 
