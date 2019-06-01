@@ -55,10 +55,11 @@ import java.util.regex.Pattern;
  * 
  * @author Ryan Knell <a href="http://www.aspectsecurity.com">Aspect Security</a>
  * @created July, 23 2007
+ * Modified for Code review exercise by Jason White 
+ * @modified 2019
  */
 
-public class ConcurrencyCart extends LessonAdapter
-{
+public class ConcurrencyCart extends LessonAdapter {
     // Shared Variables
     private static int total = 0;
     private static float runningTOTAL = 0;
@@ -79,22 +80,20 @@ public class ConcurrencyCart extends LessonAdapter
      * @return Description of the Return Value
      */
 
-    protected Element createContent(WebSession s)
-    {
-        ElementContainer ec = null;
-
+    protected String calculateRunningTotal(WebSession s) {
         try
         {
             String submit = s.getParser().getStringParameter("SUBMIT");
 
             if ("Purchase".equalsIgnoreCase(submit))
             {
+                //User submits for purchase
                 updateQuantity(s);
                 ec = createPurchaseContent(s, quantity1, quantity2, quantity3, quantity4);
-            }
-            else if ("Confirm".equalsIgnoreCase(submit))
-            {
-                ec = confirmation(s, quantity1, quantity2, quantity3, quantity4);
+            } else if ("Confirm".equalsIgnoreCase(submit)) {
+                //User confirms purchase
+                //ec = 
+                confirmation(s, quantity1, quantity2, quantity3, quantity4);
 
                 // Discount
 
@@ -106,43 +105,22 @@ public class ConcurrencyCart extends LessonAdapter
                 // The expected case -- items cost something
                 {
                     ratio = runningTOTAL / calcTOTAL;
+                    return formatFloat(runningTOTAL)
                 }
 
-                if (calcTOTAL > runningTOTAL)
-                {
-                    // CONGRATS
-                    discount = (int) (100 * (1 - ratio));
-                    s.setMessage("Thank you for shopping! You have (illegally!) received a " + discount
-                            + "% discount. Police are on the way to your IP address.");
-
-                    makeSuccess(s);
-                }
-                else if (calcTOTAL < runningTOTAL)
-                {
-                    // ALMOST
-                    discount = (int) (100 * (ratio - 1));
-                    s.setMessage("You are on the right track, but you actually overpaid by " + discount
-                            + "%. Try again!");
-                }
-            }
-            else
-            {
-                updateQuantity(s);
-                ec = createShoppingPage(s, quantity1, quantity2, quantity3, quantity4);
+            } else {
+                return 0;
             }
 
-        } catch (ParameterNotFoundException pnfe)
-        {
+        } catch (ParameterNotFoundException pnfe) {
             // System.out.println("[DEBUG] no action selected, defaulting to createShoppingPage");
-            ec = createShoppingPage(s, quantity1, quantity2, quantity3, quantity4);
+            return 0;
         }
-
-        return ec;
+        
     }
 
     // UPDATE QUANTITY VARIABLES
-    private void updateQuantity(WebSession s)
-    {
+    private void updateQuantity(WebSession s) {
         quantity1 = thinkPositive(s.getParser().getIntParameter("QTY1", 0));
         quantity2 = thinkPositive(s.getParser().getIntParameter("QTY2", 0));
         quantity3 = thinkPositive(s.getParser().getIntParameter("QTY3", 0));
@@ -153,402 +131,84 @@ public class ConcurrencyCart extends LessonAdapter
      * PURCHASING PAGE
      */
 
-    private ElementContainer createPurchaseContent(WebSession s, int quantity1, int quantity2, int quantity3,
-            int quantity4)
-    {
+    private void calculatePurchaseTotal(WebSession s, int quantity1, int quantity2, int quantity3,
+            int quantity4) {
 
-        ElementContainer ec = new ElementContainer();
         runningTOTAL = 0;
 
-        String regex1 = "^[0-9]{3}$";// any three digits
-        Pattern pattern1 = Pattern.compile(regex1);
-
-        try
-        {
-            String param1 = s.getParser().getRawParameter("PAC", "111");
-            String param2 = HtmlEncoder.encode(s.getParser().getRawParameter("CC", "5321 1337 8888 2007"));
-
-            // test input field1
-            if (!pattern1.matcher(param1).matches())
-            {
-                s.setMessage("Error! You entered " + HtmlEncoder.encode(param1)
-                        + " instead of your 3 digit code.  Please try again.");
-            }
-
-            ec.addElement(new HR().setWidth("90%"));
-            ec.addElement(new Center().addElement(new H1().addElement("Place your order ")));
-            Table table = new Table().setCellSpacing(0).setCellPadding(2).setBorder(1).setWidth("90%")
-                    .setAlign("center");
-
-            if (s.isColor())
-            {
-                table.setBorder(1);
-            }
-
-            // Table Setup
-            TR tr = new TR();
-            tr.addElement(new TH().addElement("Shopping Cart Items").setWidth("80%"));
-            tr.addElement(new TH().addElement("Price").setWidth("10%"));
-            tr.addElement(new TH().addElement("Quantity").setWidth("3%"));
-            tr.addElement(new TH().addElement("Subtotal").setWidth("7%"));
-            table.addElement(tr);
-
-            // Item 1
-            tr = new TR(); // Create a new table object
-            tr.addElement(new TD().addElement("Hitachi - 750GB External Hard Drive"));
-            tr.addElement(new TD().addElement("$169.00").setAlign("right"));
-            tr.addElement(new TD().addElement(String.valueOf(quantity1)).setAlign("center"));
-
+        try {
+            // for this exercise, imagine the values were pulled from a DB, not hardcoded ... humor me
+            //Item 1
             total = quantity1 * 169;
             runningTOTAL += total;
-            tr.addElement(new TD().addElement("$" + formatInt(total) + ".00"));
-            table.addElement(tr); // Adds table to the HTML
 
             // Item 2
-            tr = new TR();
-            tr.addElement(new TD().addElement("Hewlett-Packard - All-in-One Laser Printer"));
-            tr.addElement(new TD().addElement("$299.00").setAlign("right"));
-            tr.addElement(new TD().addElement(String.valueOf(quantity2)).setAlign("center"));
-
             total = quantity2 * 299;
             runningTOTAL += total;
-            tr.addElement(new TD().addElement("$" + formatInt(total) + ".00"));
-            table.addElement(tr);
-
+            
             // Item 3
-            tr = new TR();
-            tr.addElement(new TD().addElement("Sony - Vaio with Intel Centrino"));
-            tr.addElement(new TD().addElement("$1799.00").setAlign("right"));
-            tr.addElement(new TD().addElement(String.valueOf(quantity3)).setAlign("center"));
-
             total = quantity3 * 1799;
             runningTOTAL += total;
-            tr.addElement(new TD().addElement("$" + formatInt(total) + ".00"));
-            table.addElement(tr);
 
             // Item 4
-            tr = new TR();
-            tr.addElement(new TD().addElement("Toshiba - XGA LCD Projector "));
-            tr.addElement(new TD().addElement("$649.00").setAlign("right"));
-            tr.addElement(new TD().addElement(String.valueOf(quantity4)).setAlign("center"));
-
             total = quantity4 * 649;
             runningTOTAL += total;
-            tr.addElement(new TD().addElement("$" + formatInt(total) + ".00"));
-            table.addElement(tr);
-
-            ec.addElement(table);
-
-            table = new Table().setCellSpacing(0).setCellPadding(2).setBorder(0).setWidth("90%").setAlign("center");
-
-            if (s.isColor())
-            {
-                table.setBorder(1);
-            }
-
             ec.addElement(new BR());
 
             calcTOTAL = runningTOTAL;
 
-            // Total Charged
-            tr = new TR();
-            tr.addElement(new TD().addElement("Total:"));
-            tr.addElement(new TD().addElement("$" + formatFloat(runningTOTAL)).setAlign("right"));
-            table.addElement(tr);
-
-            tr = new TR();
-            tr.addElement(new TD().addElement("&nbsp;").setColSpan(2));
-            table.addElement(tr);
-
-            // Credit Card Input
-            tr = new TR();
-            tr.addElement(new TD().addElement("Enter your credit card number:"));
-            tr.addElement(new TD().addElement(new Input(Input.TEXT, "CC", param2)).setAlign("right"));
-            table.addElement(tr);
-
-            // PAC Input
-            tr = new TR();
-            tr.addElement(new TD().addElement("Enter your three digit access code:"));
-            tr.addElement(new TD().addElement(new Input(Input.TEXT, "PAC", param1)).setAlign("right"));
-            table.addElement(tr);
-
-            // Confirm Button
-            Element b = ECSFactory.makeButton("Confirm");
-            tr = new TR();
-            tr.addElement(new TD().addElement(b).setColSpan(2).setAlign("right"));
-            table.addElement(tr);
-
-            // Cancel Button
-            Element c = ECSFactory.makeButton("Cancel");
-            tr = new TR();
-            tr.addElement(new TD().addElement(c).setColSpan(2).setAlign("right"));
-            table.addElement(tr);
-
-            ec.addElement(table);
-            ec.addElement(new BR());
-
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             s.setMessage("Error generating " + this.getClass().getName());
             e.printStackTrace();
         }
 
-        return (ec);
     }
 
     /*
-     * CONFIRMATION PAGE
+     * CONFIRMATION PAGE - Final purchcase and confirmation are made from here
      */
 
-    private ElementContainer confirmation(WebSession s, int quantity1, int quantity2, int quantity3, int quantity4)
-    {
-        ElementContainer ec = new ElementContainer();
+    private void confirmation(WebSession s, int quantity1, int quantity2, int quantity3, int quantity4) {
 
-        final String confNumber = "CONC-88";
+        //final String confNumber = "CONC-88";
+        //TODO generate random confirmation number
         calcTOTAL = 0;
-        try
-        {
-            // Thread.sleep(5000);
-
-            ec.addElement(new HR().setWidth("90%"));
-            ec.addElement(new Center().addElement(new H1().addElement("Thank you for your purchase!")));
-            ec.addElement(new Center().addElement(new H1().addElement("Confirmation number: " + confNumber)));
-            Table table = new Table().setCellSpacing(0).setCellPadding(2).setBorder(1).setWidth("90%")
-                    .setAlign("center");
-
-            if (s.isColor())
-            {
-                table.setBorder(1);
-            }
-
-            // Table Setup
-            TR tr = new TR();
-            tr.addElement(new TH().addElement("Shopping Cart Items").setWidth("80%"));
-            tr.addElement(new TH().addElement("Price").setWidth("10%"));
-            tr.addElement(new TH().addElement("Quantity").setWidth("3%"));
-            tr.addElement(new TH().addElement("Subtotal").setWidth("7%"));
-            table.addElement(tr);
-
+        try {
+            
             // Item 1
-            tr = new TR(); // Create a new table object
-            tr.addElement(new TD().addElement("Hitachi - 750GB External Hard Drive"));
-            tr.addElement(new TD().addElement("$169.00").setAlign("right"));
-            tr.addElement(new TD().addElement(String.valueOf(quantity1)).setAlign("center"));
-
             total = quantity1 * 169;
             calcTOTAL += total;
-            tr.addElement(new TD().addElement("$" + formatInt(total) + ".00"));
-            table.addElement(tr); // Adds table to the HTML
 
             // Item 2
-            tr = new TR();
-            tr.addElement(new TD().addElement("Hewlett-Packard - All-in-One Laser Printer"));
-            tr.addElement(new TD().addElement("$299.00").setAlign("right"));
-            tr.addElement(new TD().addElement(String.valueOf(quantity2)).setAlign("center"));
-
             total = quantity2 * 299;
             calcTOTAL += total;
-            tr.addElement(new TD().addElement("$" + formatInt(total) + ".00"));
-            table.addElement(tr);
 
             // Item 3
-            tr = new TR();
-            tr.addElement(new TD().addElement("Sony - Vaio with Intel Centrino"));
-            tr.addElement(new TD().addElement("$1799.00").setAlign("right"));
-            tr.addElement(new TD().addElement(String.valueOf(quantity3)).setAlign("center"));
-
             total = quantity3 * 1799;
             calcTOTAL += total;
-            tr.addElement(new TD().addElement("$" + formatInt(total) + ".00"));
-            table.addElement(tr);
 
             // Item 4
-            tr = new TR();
-            tr.addElement(new TD().addElement("Toshiba - XGA LCD Projector "));
-            tr.addElement(new TD().addElement("$649.00").setAlign("right"));
-            tr.addElement(new TD().addElement(String.valueOf(quantity4)).setAlign("center"));
-
             total = quantity4 * 649;
             calcTOTAL += total;
-            tr.addElement(new TD().addElement("$" + formatInt(total) + ".00"));
-            table.addElement(tr);
-
-            ec.addElement(table);
-
-            table = new Table().setCellSpacing(0).setCellPadding(2).setBorder(0).setWidth("90%").setAlign("center");
-
-            if (s.isColor())
-            {
-                table.setBorder(1);
-            }
-
-            ec.addElement(new BR());
-
-            // Total Charged
-            tr = new TR();
-            tr.addElement(new TD().addElement("Total Amount Charged to Your Credit Card:"));
-            tr.addElement(new TD().addElement("$" + formatFloat(runningTOTAL)).setAlign("right"));
-            table.addElement(tr);
-
-            tr = new TR();
-            tr.addElement(new TD().addElement("&nbsp;").setColSpan(2));
-            table.addElement(tr);
-
-            // Return to Store Button
-            Element b = ECSFactory.makeButton("Return to Store");
-            tr = new TR();
-            tr.addElement(new TD().addElement(b).setColSpan(2).setAlign("center"));
-            table.addElement(tr);
-
-            ec.addElement(table);
-            ec.addElement(new BR());
-
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             s.setMessage("Error generating " + this.getClass().getName());
             e.printStackTrace();
         }
-        return (ec);
     }
 
-    /*
-     * SHOPPING PAGE
-     */
-
-    private ElementContainer createShoppingPage(WebSession s, int quantity1, int quantity2, int quantity3, int quantity4)
-    {
-
-        ElementContainer ec = new ElementContainer();
-        subTOTAL = 0;
-
-        try
-        {
-
-            ec.addElement(new HR().setWidth("90%"));
-            ec.addElement(new Center().addElement(new H1().addElement("Shopping Cart ")));
-            Table table = new Table().setCellSpacing(0).setCellPadding(2).setBorder(1).setWidth("90%")
-                    .setAlign("center");
-
-            if (s.isColor())
-            {
-                table.setBorder(1);
-            }
-
-            // Table Setup
-            TR tr = new TR();
-            tr.addElement(new TH().addElement("Shopping Cart Items").setWidth("80%"));
-            tr.addElement(new TH().addElement("Price").setWidth("10%"));
-            tr.addElement(new TH().addElement("Quantity").setWidth("3%"));
-            tr.addElement(new TH().addElement("Subtotal").setWidth("7%"));
-            table.addElement(tr);
-
-            // Item 1
-            tr = new TR(); // Create a new table object
-            tr.addElement(new TD().addElement("Hitachi - 750GB External Hard Drive"));
-            tr.addElement(new TD().addElement("$169.00").setAlign("right"));
-            tr.addElement(new TD().addElement(new Input(Input.TEXT, "QTY1", String.valueOf(quantity1)))
-                    .setAlign("right"));
-
-            total = quantity1 * 169;
-            subTOTAL += total;
-            tr.addElement(new TD().addElement("$" + formatInt(total) + ".00"));
-            table.addElement(tr); // Adds table to the HTML
-
-            // Item 2
-            tr = new TR();
-            tr.addElement(new TD().addElement("Hewlett-Packard - All-in-One Laser Printer"));
-            tr.addElement(new TD().addElement("$299.00").setAlign("right"));
-            tr.addElement(new TD().addElement(new Input(Input.TEXT, "QTY2", String.valueOf(quantity2)))
-                    .setAlign("right"));
-
-            total = quantity2 * 299;
-            subTOTAL += total;
-            tr.addElement(new TD().addElement("$" + formatInt(total) + ".00"));
-            table.addElement(tr);
-
-            // Item 3
-            tr = new TR();
-            tr.addElement(new TD().addElement("Sony - Vaio with Intel Centrino"));
-            tr.addElement(new TD().addElement("$1799.00").setAlign("right"));
-            tr.addElement(new TD().addElement(new Input(Input.TEXT, "QTY3", String.valueOf(quantity3)))
-                    .setAlign("right"));
-
-            total = quantity3 * 1799;
-            subTOTAL += total;
-            tr.addElement(new TD().addElement("$" + formatInt(total) + ".00"));
-            table.addElement(tr);
-
-            // Item 4
-            tr = new TR();
-            tr.addElement(new TD().addElement("Toshiba - XGA LCD Projector "));
-            tr.addElement(new TD().addElement("$649.00").setAlign("right"));
-            tr.addElement(new TD().addElement(new Input(Input.TEXT, "QTY4", String.valueOf(quantity4)))
-                    .setAlign("right"));
-
-            total = quantity4 * 649;
-            subTOTAL += total;
-            tr.addElement(new TD().addElement("$" + formatInt(total) + ".00"));
-            table.addElement(tr);
-
-            ec.addElement(table);
-
-            table = new Table().setCellSpacing(0).setCellPadding(2).setBorder(0).setWidth("90%").setAlign("center");
-
-            if (s.isColor())
-            {
-                table.setBorder(1);
-            }
-
-            ec.addElement(new BR());
-
-            // Purchasing Amount
-            tr = new TR();
-            tr.addElement(new TD().addElement("Total: " + "$" + formatInt(subTOTAL) + ".00").setAlign("left"));
-            table.addElement(tr);
-
-            // Update Button
-            Element b = ECSFactory.makeButton("Update Cart");
-            tr = new TR();
-            tr.addElement(new TD().addElement(b).setColSpan(2).setAlign("right"));
-            table.addElement(tr);
-
-            tr = new TR();
-            tr.addElement(new TD().addElement("&nbsp;").setColSpan(2));
-            table.addElement(tr);
-
-            // Purchase Button
-            Element c = ECSFactory.makeButton("Purchase");
-            tr = new TR();
-            tr.addElement(new TD().addElement(c).setColSpan(2).setAlign("right"));
-            table.addElement(tr);
-
-            ec.addElement(table);
-            ec.addElement(new BR());
-
-        } catch (Exception e)
-        {
-            s.setMessage("Error generating " + this.getClass().getName());
-            e.printStackTrace();
-        }
-        return (ec);
-    }
-
-    String formatInt(int i)
-    {
+    String formatInt(int i) {
         NumberFormat intFormat = NumberFormat.getIntegerInstance(Locale.US);
         return intFormat.format(i);
     }
 
-    String formatFloat(float f)
-    {
+    String formatFloat(float f) {
         NumberFormat floatFormat = NumberFormat.getNumberInstance(Locale.US);
         floatFormat.setMinimumFractionDigits(2);
         floatFormat.setMaximumFractionDigits(2);
         return floatFormat.format(f);
     }
 
-    int thinkPositive(int i)
-    {
+    int thinkPositive(int i) {
         if (i < 0)
             return 0;
         else
@@ -556,22 +216,21 @@ public class ConcurrencyCart extends LessonAdapter
     }
 
     /**
-     * DOCUMENT ME!
+     * This can be ignored for purpose of this code review exercise
      * 
      * @return DOCUMENT ME!
      */
-    protected Category getDefaultCategory()
-    {
+    protected Category getDefaultCategory() {
         return Category.CONCURRENCY;
     }
 
     /**
      * Gets the hints attribute of the AccessControlScreen object
-     * 
+     * These are original hints from the old WebGoat lesson
+     * ...leaving in for code review exercise as it may be helpful
      * @return The hints value
      */
-    protected List<String> getHints(WebSession s)
-    {
+    protected List<String> getHints(WebSession s) {
         List<String> hints = new ArrayList<String>();
         hints.add("Can you purchase the merchandise in your shopping cart for a lower price?");
         hints.add("Try using a new browser window to get a lower price.");
