@@ -9,11 +9,11 @@ This is taken from an older version of WebGoat and cleaned up to be more reviewa
 The web pages that relate look like this ...
 
 ### Purchase Page
-![](../../images/concurrency-shopping-page.png) 
+![](../../../images/concurrency-shopping-page.png) 
 
 This is where you put in the quantity for each item. When you click purchase ...
 
 ### Confirm Page
-![](../../images/concurrency-shopping-confirm.png) 
+![](../../../images/concurrency-shopping-confirm.png) 
 
 This is where you confirm your purchase and it is completed.
