@@ -1,7 +1,7 @@
 # Concurrency Code Review
 
 ## Overview
-Review this code for concurrency issues and suggest a solution via a PR or create an issue explaining how to approach it
+Review this code for concurrency issues and suggest a solution via a PR or create an issue explaining how to approach the fix.
 
 ## Some Background
 This is taken from an older version of WebGoat and cleaned up to be more reviewable in the time we have. 
