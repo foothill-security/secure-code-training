@@ -7,7 +7,7 @@ Instuctions for getting set up for day 1 labs ... and some of day 2
 We will be using OWASP ZAP some as an intercept proxy in the labs. You will need to download and set it up. You can start here: https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project.
 
 ### WebGoat Access
-Verify you can access the WebGoat instance at http://webgoat.foothillsecurity.com:8080/WebGoat (as a backup http://34.94.179.103:8080/WebGoat). Once you do, Try any/all of the following lessons/labs ...
+Verify you can access the WebGoat instance [here](http://webgoat.foothillsecurity.com:8080/WebGoat) (as a backup http://34.94.179.103:8080/WebGoat). Once you do, Try any/all of the following lessons/labs ...
 * HTTP Basics
 * HTTP Proxies
 * Google Chrome Developer Tools
