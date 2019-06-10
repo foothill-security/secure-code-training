@@ -7,7 +7,10 @@
 We will be using OWASP ZAP some as an intercept proxy in the labs. You will need to download and set it up. You can start here.
 
 ### WebGoat Access
-Verify you can access the WebGoat instance at http://webgoat.foothillsecurity.com
+Verify you can access the WebGoat instance at http://webgoat.foothillsecurity.com:8080/WebGoat (as a backup http://34.94.179.103:8080/WebGoat/login). Once you do, Try any/all of the following lessons/labs ...
+* HTTP Basics
+* HTTP Proxies
+* Google Chrome Developer Tools
 
 ## Day 2
 
