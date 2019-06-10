@@ -1,4 +1,4 @@
-## Day 1 AM (9:00 AM)
+## Starting day 1 - 9 AM
 
 NOTE: Breaks are not on the schedule, but don't worry we will take some
 
@@ -29,9 +29,6 @@ NOTE: Breaks are not on the schedule, but don't worry we will take some
 *  Passwords/Multi Factor Authentication
 *  LAB - Password Reset / Authentication Bypass in WebGoat
 
-### END of Day 1 (4:00 – 4:15 PM)
-
-## Day 2 AM (9:00 AM)
 ### Authorization / Access Control
 *  AC/Insecure Direct Object References - Lecture
 *  LAB IDOR Labs
@@ -41,8 +38,6 @@ NOTE: Breaks are not on the schedule, but don't worry we will take some
 
 ### Resource Starvation/File handling
 *  File upload - Lecture
-
-### BREAK ??
 
 ### Protecting Sensitive Data
 *  Sensitive Data - Lecture 
@@ -61,7 +56,6 @@ NOTE: Breaks are not on the schedule, but don't worry we will take some
 - [ ] Open Redirects – Lecture
 
 ### Deserialization/
-
 
 ### Logging / Monitoring - Lecture
 
