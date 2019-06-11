@@ -7,14 +7,12 @@ Instuctions for getting set up for day 1 labs ... and some of day 2
 We will be using OWASP ZAP some as an intercept proxy in the labs. You will need to download and set it up. You can start here: https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project.
 
 ### WebGoat Access
-Verify you can access the WebGoat instance [here](http://webgoat.foothillsecurity.com:8080/WebGoat) (as a backup http://34.94.179.103:8080/WebGoat). Once you do, Try any/all of the following lessons/labs ...
+Verify you can access the WebGoat instance http://webgoat.foothillsecurity.com/WebGoat/. Once you do, Try any/all of the following lessons/labs ...
 * HTTP Basics
 * HTTP Proxies
 * Google Chrome Developer Tools
 
 ## Day 2
-
-
 
 ## Git Client Setup
 We will be using git/github to do some code review. You can technically do it all in the web UI, but if you want to pracice using git/gitflow, you should set up a git client. The instructions here will assume a git command-line client, but can often be translated into GUI client commands readily.
