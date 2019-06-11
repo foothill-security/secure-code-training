@@ -73,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().deleteCookies("JSESSIONID").invalidateHttpSession(false);
         security.and().csrf().enable();
 
-        http.headers().cacheControl().disable();
+        http.headers().cacheControl().enable();
         http.exceptionHandling().authenticationEntryPoint(new AjaxAuthenticationEntryPoint("/login"));
     }
 
