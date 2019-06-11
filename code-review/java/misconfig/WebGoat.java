@@ -110,7 +110,7 @@ public class WebGoat extends SpringBootServletInitializer {
     static class CustomCustomizer implements TomcatContextCustomizer {
         @Override
         public void customize(Context context) {
-            context.setUseHttpOnly(false);
+            context.setUseHttpOnly(true);
         }
     }
 
