@@ -10,3 +10,7 @@
 
 ## SAML
 * https://auth0.com/blog/how-saml-authentication-works/ (be aware, this is a vendor tutortial)
+
+## Other
+* Grabbing/running WebGoat on your own: https://github.com/WebGoat/WebGoat'
+* Juiceshop - another purposely vulnerable web app: https://github.com/bkimminich/juice-shop
