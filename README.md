@@ -12,3 +12,5 @@ We will also do some code review. This will entail looking at a snippet of code,
 ## WebGoat Labs
 We will 'break some stuff' to see how things can go south during the training and will use WebGoat for that (and possibly Juice Shop).  You can access WebGoat at [insert.url.here](insert.url.here)
 
+## Some other header
+some other text
